@@ -9,7 +9,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import 'react-native-gesture-handler';
-
+import Header from './header';
+import HeaderBG from './headerBG';
 
 const getFonts = () => Font.loadAsync({
     'lato-regular': require('./fonts/Lato-Regular.ttf'),
@@ -20,11 +21,20 @@ const getFonts = () => Font.loadAsync({
   const Drawer = createDrawerNavigator();
 
   const StackNavigator = () => 
+  { 
+    return(
+      <Stack.Navigator >
+        <Stack.Screen name="Home"  component={Home} options={{ headerTitle: () => <Header title={'Reviews List'}/>, headerBackground: () => <HeaderBG/> }} />
+        <Stack.Screen name="Review Detalies" component={ReviewDetalis} />
+      </Stack.Navigator>
+    )
+  }
+
+  const SingleStackNavigator = () => 
   {
     return(
-      <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f4511e', headerTintColor: '#fff',}}}>
-        <Stack.Screen name="Home"  component={Home} />
-        <Stack.Screen name="Review Detalies" component={ReviewDetalis} />
+      <Stack.Navigator>
+        <Stack.Screen name="About" component={About} options={{ headerTitle: () => <Header title={'About'}/>, headerBackground: () => <HeaderBG/>}} />
       </Stack.Navigator>
     )
   }
@@ -37,10 +47,10 @@ export default function App() {
     return (
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
-          <Drawer.Screen name="Home" component={StackNavigator} />
-          <Drawer.Screen name="About" component={About} />
+          <Drawer.Screen name="Home Page" component={StackNavigator} options={{headerShown: false}} />
+          <Drawer.Screen name="About Page" component={SingleStackNavigator}/>
         </Drawer.Navigator>
-    </NavigationContainer>
+      </NavigationContainer>
       
     );
   } else {
