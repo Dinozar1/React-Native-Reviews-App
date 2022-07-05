@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Button, FlatList, TouchableOpacity, Modal, StyleSheet } from "react-native";
+import { View, Text, Button, FlatList, TouchableOpacity, Modal, StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { globalStyles } from './styles/global'
 import Card from './styles/card'
 import { Ionicons } from '@expo/vector-icons';
@@ -13,13 +13,29 @@ export default function Home({navigation})
     { title: 'Not So "Final" Fantasy', rating: 3, body: 'lorem ipsum', key: '3' },
   ])
 
+  const addReview = (review) => 
+  {
+    
+    if(reviews[0].key === undefined)
+    {
+        review.key = '1'
+    }
+    else
+    {
+        review.key = (Number(reviews[reviews.length-1].key)+1).toString()
+    }
+    setReviews([...reviews, review])
+  }
+
     return(
         <View style={globalStyles.container}>
             <Modal visible={modalOpen} animationType={'slide'} style={styles.modalContent}>
-                <View>
-                    <Ionicons name="close" size={24} color="black" style={{...styles.modalClose, ...styles.modal }}  onPress={() => setModalOpen(false)}/>
-                    <Form />
-                </View>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View>
+                        <Ionicons name="close" size={24} color="black" style={{...styles.modalClose, ...styles.modal }}  onPress={() => setModalOpen(false)}/>
+                        <Form functions={addReview} />
+                    </View>
+                </TouchableWithoutFeedback>
             </Modal>
 
             <Ionicons name="add" size={24} color="black" style={styles.modal } onPress={() => setModalOpen(true)}/>

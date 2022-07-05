@@ -4,7 +4,7 @@ export const globalStyles = StyleSheet.create({
     container: 
     {
         flex: 1,
-        padding:24,
+        padding: 24,
     },
     titleText:
     {
@@ -37,6 +37,14 @@ export const globalStyles = StyleSheet.create({
         margin: 10,
         marginTop:100,
         elevation: 10
+    },
+
+    errorText:
+    {
+        color: 'crimson',
+        fontWeight: 'bold',
+        marginBottom: 10,
+        textAlign: 'center'
     }
 })
 
